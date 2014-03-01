@@ -17,7 +17,7 @@ def main():
         api_request = "/"
     try:
         response = urllib2.urlopen(get.ip + api_request)
-    except URLError:
+    except:
         exit(4) #Exit 4 is short for 404
     print response.read()
 
