@@ -4,8 +4,10 @@ import cv2
 from time import sleep
 
 class ImgGetter():
-    def __init__(self):
+    def __init__(self, nCharX, nCharY):
         self.cam = cv2.VideoCapture(-1)
+        self.nCharX=nCharX
+        self.nCharY=nCharY
 
     def getImg(self):
         success, data = self.cam.read()
@@ -16,6 +18,6 @@ class ImgGetter():
     def __del__(self):
         self.cam = cv2.VideoCapture(-1)
 
-img = ImgGetter()
-print img.getImg()
-del img
+imGet = ImgGetter()
+print imGet.getImg()
+del imGet
