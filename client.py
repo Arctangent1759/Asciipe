@@ -25,12 +25,16 @@ def get_user():
 @app.route("/get/sound/")
 def start_sound():
     global sound_process
-    sound_process = subprocess.Popen(['python','audio_client.py', request.remote_addr])
+    if sound_process == None:
+        sound_process = subprocess.Popen(['python','audio_client.py', request.remote_addr])
+    return "Playing"
 
 @app.route("/get/mute/")
 def stop_sound():
     global sound_process
     sound_process.terminate()
+    sound_process = None
+    return "Muted"
 
 if __name__ == "__main__":
     app.run('0.0.0.0', 8008)
