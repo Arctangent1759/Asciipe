@@ -17,14 +17,16 @@ PORT = 8009              # The same port as used by the server
 class AudioProcess(Thread):
     def __init__(self):
         Thread.__init__(self)
+        print "** Init **"
         self.host=False
         self.isRunning = False
 
     def run(self):
-        while not HOST:
+        print "** run **"
+        while not self.host:
             sleep(.1)
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((HOST, PORT))
+        s.connect((self.host, PORT))
         p = pyaudio.PyAudio()
         stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
         print("*recording")
@@ -41,19 +43,9 @@ class AudioProcess(Thread):
         s.close()
 
     def setHost(self,host):
+        print "** SetHost {0} **".format(host)
         self.host=host
 
     def stop(self):
+        print "** Stop **"
         self.isRunning=False
-
-
-
-
-
-
-
-
-
-
-print("*closed")
-##############################################################
