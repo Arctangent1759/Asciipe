@@ -56,6 +56,10 @@ def trim(s, w, h):
        result.append(line)
     return '\n'.join(result)
 
+def parse_color(r):
+    return r
+
+
 def main(w):
 
     curses.noecho()
@@ -89,6 +93,7 @@ def main(w):
             response = subprocess.check_output(
                     ['python','get.py','-ip', ip, 'frame'])
             HEIGHT, WIDTH = w.getmaxyx()
+            response = parse_color(response)
             w.addstr(0,0,trim(response, WIDTH, HEIGHT))
             w.refresh()
     except KeyboardInterrupt as e:
