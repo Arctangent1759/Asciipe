@@ -4,6 +4,7 @@ import subprocess
 import console
 from time import sleep
 from threading import Thread
+import sys
 
 cat = """
    ____
@@ -25,6 +26,8 @@ ip = addr + ":" + port
 
 ip = "10.142.39.57:8008"
 ip = "0.0.0.0:8008"
+if len(sys.argv)>1:
+    ip = sys.argv[1]
 
 HEIGHT, WIDTH = 0, 0
 
