@@ -83,12 +83,10 @@ def main(w):
     handle()
 
     # initialize sound
-    """
     try:
         subprocess.check_output(['python','get.py','-ip',ip,'sound'])
     except Exception as e:
         error_msg = str(e)
-        """
     try:
         while True:
             w.erase()
@@ -98,6 +96,7 @@ def main(w):
             response = parse_color(response)
             responses = response.split('\n')
             #w.addstr(0,0,trim(response, WIDTH, HEIGHT))
+            trim(response, WIDTH, HEIGHT)
             height, width = len(responses), len(responses[0])
             """
             for r in responses:
