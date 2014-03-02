@@ -97,7 +97,7 @@ def main(w):
             HEIGHT, WIDTH = w.getmaxyx()
             response = parse_color(response)
             responses = response.split('\n')
-            w.addstr(0,0,trim(response, WIDTH, HEIGHT))
+            #w.addstr(0,0,trim(response, WIDTH, HEIGHT))
             height, width = len(responses), len(responses[0])
             """
             for r in responses:
