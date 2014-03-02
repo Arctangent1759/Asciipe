@@ -7,7 +7,7 @@ import subprocess
 sound_process = None
 
 import ImgGet
-img = None
+img_obj = None
 
 @app.route("/")
 def init():
@@ -15,9 +15,10 @@ def init():
 
 @app.route("/get/frame/")
 def get_frame():
-    if img == None:
-        img = ImgGet.ImgGetter(13*5,8*5)
-    print img.getImg()
+    global img_obj
+    if img_obj == None:
+        img_obj = ImgGet.ImgGetter(13*5,8*5)
+    return img_obj.getImg()
 
 @app.route("/get/user/")
 def get_user():
