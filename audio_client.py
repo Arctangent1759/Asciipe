@@ -10,8 +10,8 @@ CHANNELS = 1
 RATE = 44100
 RECORD_SECONDS = 40
 
-HOST = ''    # The remote host
-PORT = 50007              # The same port as used by the server
+HOST = '10.142.39.57'    # The remote host
+PORT = 8008              # The same port as used by the server
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
