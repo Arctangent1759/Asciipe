@@ -95,7 +95,6 @@ def main(w):
     except Exception as e:
         error_msg = str(e)
     try:
-        print "Hello World"
         while True:
             w.erase()
             response = subprocess.check_output(
