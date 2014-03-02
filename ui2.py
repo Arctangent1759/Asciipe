@@ -23,6 +23,7 @@ ip = addr + ":" + port
 """
 
 ip = "10.142.39.57:8008"
+ip = "0.0.0.0:8008"
 
 
 class UI(Thread):
@@ -45,6 +46,17 @@ class UI(Thread):
     def stop(self):
         self.isRunning = False
 
+def trim_nowrap(s, w, h):
+    lines = s.split('\n')
+    result = []
+    display_height = 0
+    for line in lines:
+        if len(line) > w:
+            line = line[:w]
+    lines = lines[:h]
+    return '\n'.join(lines)
+
+
 def trim(s, w, h):
     lines = s.split('\n')
     result = []
@@ -63,7 +75,7 @@ def main(w):
     w.keypad(1)
     curses.start_color()
     curses.curs_set(0)
-    ui = UI(w)
+    #ui = UI(w)
 
     w.nodelay(1)
 
