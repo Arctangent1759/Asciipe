@@ -32,9 +32,9 @@ stream.stop_stream()
 stream.close()
 p.terminate()
 
-url = '192.168.1.10'
+url = '127.0.0.1'
 data = urllib.urlencode({'FORMAT' : format,
                          'CHANNELS'  : CHANNELS,
-                         'RATE' : rate})
+                         'RATE' : RATE})
 response = urllib2.urlopen(url=url, data= b''.join(frames)).read()
 assert(response == "Successfully Played")

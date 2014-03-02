@@ -3,13 +3,15 @@
 from flask import Flask
 app = Flask(__name__)
 
+import subprocess
+
 @app.route("/")
 def init():
     return "asciipe"
 
 @app.route("/get/frame/")
 def get_frame():
-    return "FRAME as ASCII"
+    return subprocess.check_output(["python","get_frame.py"])
 
 @app.route("/get/user/")
 def get_user():
