@@ -84,10 +84,11 @@ def main(w):
 
     # initialize sound
     try:
-        subprocess.check_output(['python','get.py','-ip',ip,'sound'])
+        subprocess.call(['python','get.py','-ip',ip,'sound'])
     except Exception as e:
         error_msg = str(e)
     try:
+        print "Hello World"
         while True:
             w.erase()
             response = subprocess.check_output(
