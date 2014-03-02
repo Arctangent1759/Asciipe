@@ -32,6 +32,10 @@ if len(sys.argv)>1:
 HEIGHT, WIDTH = 0, 0
 NEG_CHAR = '-'
 POS_CHAR = '+'
+NEG_COLOR = curses.COLOR_RED
+POS_COLOR = curses.COLOR_GREEN
+NEG_COLOR_NUM = 2
+POS_COLOR_NUM = 4
 
 class Window:
     def __init__(self, stdscr):
@@ -69,6 +73,9 @@ def main(w):
     w.keypad(1)
     curses.start_color()
     curses.curs_set(0)
+    curses.start_color()
+    curses.init_pair(NEG_COLOR_NUM, NEG_COLOR, curses.COLOR_BLACK)
+    curses.init_pair(POS_COLOR_NUM, POS_COLOR, curses.COLOR_BLACK)
     #ui = UI(w)
 
     w.nodelay(1)
@@ -99,25 +106,13 @@ def main(w):
             #w.addstr(0,0,trim(response, WIDTH, HEIGHT))
             trim(response, WIDTH, HEIGHT)
             height, width = len(responses), len(responses[0])
-            """
-            for r in responses:
-                w.addstr(0, 0, r)
-            """
-            """
-            for y in xrange(height):
-                for x in xrange(width):
-                    if responses[y][x] == '0':
-                        w.addch(y,x,'-')
-                    else:
-                        w.addch(y,x,'+')
-            """
             #w.addch(1,1,'r')
             for y in xrange(len(responses)):
                 for x in xrange(len(responses[y])):
                     if responses[y][x] == '1':
-                        w.addch(y,x,POS_CHAR)
+                        w.addch(y,x,POS_CHAR, curses.color_pair(POS_COLOR_NUM))
                     else:
-                        w.addch(y,x,NEG_CHAR)
+                        w.addch(y,x,NEG_CHAR, curses.color_pair(NEG_COLOR_NUM))
             # end of paint
             w.refresh()
     except KeyboardInterrupt as e:
