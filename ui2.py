@@ -76,6 +76,13 @@ def main(w):
 
     handle()
 
+    # initialize sound
+    """
+    try:
+        subprocess.check_output(['python','get.py','-ip',ip,'sound'])
+    except Exception as e:
+        error_msg = str(e)
+    """
     try:
         while True:
             w.erase()
