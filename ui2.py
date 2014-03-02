@@ -25,6 +25,8 @@ ip = addr + ":" + port
 ip = "10.142.39.57:8008"
 ip = "0.0.0.0:8008"
 
+HEIGHT, WIDTH = 0, 0
+
 
 class UI(Thread):
     DELAY = .1 #Refresh delay
@@ -48,12 +50,10 @@ class UI(Thread):
 
 def trim_nowrap(s, w, h):
     lines = s.split('\n')
-    result = []
-    display_height = 0
-    for line in lines:
-        if len(line) > w:
-            line = line[:w]
     lines = lines[:h]
+    for i in xrange(len(lines)):
+        if len(lines[i]) > w:
+            lines[i] = lines[i][:w]
     return '\n'.join(lines)
 
 
@@ -82,6 +82,7 @@ def main(w):
     def handle(*args):
         w.erase()
         w.refresh()
+        HEIGHT, WIDTH = w.getmaxyx()
 
     signal.signal(signal.SIGWINCH, handle)
 
@@ -92,8 +93,8 @@ def main(w):
             w.erase()
             response = subprocess.check_output(
                     ['python','get.py','-ip', ip, 'frame'])
-            height, width = w.getmaxyx()
-            w.addstr(0,0,trim(response, width, height))
+            HEIGHT, WIDTH = w.getmaxyx()
+            w.addstr(0,0,trim_nowrap(response, WIDTH, HEIGHT))
             w.refresh()
     except KeyboardInterrupt as e:
         error_msg = str(e)
