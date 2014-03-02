@@ -1,10 +1,7 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import cv2
-from time import sleep
-np.set_printoptions(threshold=np.nan)
 
-COLORS = np.array([
+COLORS = [
     np.array([0, 0, 0]),
     np.array([170, 0, 0]),
     np.array([0, 170, 0]),
@@ -14,10 +11,18 @@ COLORS = np.array([
     np.array([0, 170, 170]),
     np.array([170, 170, 170]),
     np.array([255, 255, 255]),
-    ])
+    ]
 
 def getClosestColor(x):
-    pass
+    bestIndex = -1
+    minDist = float("infty")
+    for i in range(len(COLORS)):
+        diff = COLORS[i]-x
+        normSq = np.dot(diff,diff)
+        if normSq < minDist:
+            minDist = normSq
+            bestIndex = i
+    return i
 
 class ImgGetter():
     TRUECHAR="+"
@@ -28,12 +33,12 @@ class ImgGetter():
         self.nCharY=nCharY
 
     def getImg(self):
-        success, data = self.cam.read()
+        success, raw_data = self.cam.read()
         if not success:
             raise Exception("Failed to acquire webcam image.")
 
         #Resize and compute to greyscale
-        data = cv2.cvtColor(cv2.resize(data,(3*40,2*40)),cv2.COLOR_BGR2GRAY)
+        data = cv2.cvtColor(cv2.resize(raw_data,(3*40,2*40)),cv2.COLOR_BGR2GRAY)
 
         #Compute hpfs
         canny = cv2.Canny(data,100,200)
@@ -66,4 +71,3 @@ while True:
     print imGet.getImg()
 
 del imGet
-plt.show()
