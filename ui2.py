@@ -82,7 +82,7 @@ def main(w):
             response = subprocess.check_output(
                     ['python','get.py','-ip', ip, 'frame'])
             HEIGHT, WIDTH = w.getmaxyx()
-            w.addstr(0,0,trim_nowrap(response, WIDTH, HEIGHT))
+            w.addstr(0,0,trim(response, WIDTH, HEIGHT))
             w.refresh()
     except KeyboardInterrupt as e:
         error_msg = str(e)
