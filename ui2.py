@@ -32,8 +32,8 @@ if len(sys.argv)>1:
 HEIGHT, WIDTH = 0, 0
 NEG_CHAR = '-'
 POS_CHAR = '+'
-NEG_COLOR = curses.COLOR_RED
-POS_COLOR = curses.COLOR_GREEN
+NEG_COLOR = curses.COLOR_BLUE
+POS_COLOR = curses.COLOR_YELLOW
 NEG_COLOR_NUM = 2
 POS_COLOR_NUM = 4
 
@@ -101,10 +101,10 @@ def main(w):
             response = subprocess.check_output(
                     ['python','get.py','-ip', ip, 'frame'])
             HEIGHT, WIDTH = w.getmaxyx()
+            response = trim_nowrap(response, WIDTH, HEIGHT)
             response = parse_color(response)
             responses = response.split('\n')
             #w.addstr(0,0,trim(response, WIDTH, HEIGHT))
-            trim(response, WIDTH, HEIGHT)
             height, width = len(responses), len(responses[0])
             #w.addch(1,1,'r')
             for y in xrange(len(responses)):
