@@ -1,13 +1,13 @@
 #!/usr/bin/python
-
 from flask import Flask, request
+import subprocess
+import ImgGet
+import audio_client
+
 app = Flask(__name__)
 
-import subprocess
-sound_process = None
-
-import ImgGet
-img_obj = None
+img_obj = ImgGet.ImgGetter(120,40)
+audio_obj = audio_client.AudioProcess()
 
 @app.route("/")
 def init():
@@ -15,9 +15,6 @@ def init():
 
 @app.route("/get/frame/")
 def get_frame():
-    global img_obj
-    if img_obj == None:
-        img_obj = ImgGet.ImgGetter(120,40)
     return img_obj.getImg()
 
 @app.route("/get/user/")
@@ -30,16 +27,12 @@ def get_user():
 
 @app.route("/get/sound/")
 def start_sound():
-    global sound_process
-    if sound_process == None:
-        sound_process = subprocess.Popen(['python','audio_client.py', request.remote_addr])
+    sound_obj.setHost(request.remote_addr)
     return "Playing"
 
 @app.route("/get/mute/")
 def stop_sound():
-    global sound_process
-    sound_process.terminate()
-    sound_process = None
+    sound_process.stop()
     return "Muted"
 
 if __name__ == "__main__":
