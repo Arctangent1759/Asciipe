@@ -1,7 +1,10 @@
 #!/usr/bin/python
 
-from flask import Flask
+from flask import Flask, request
 app = Flask(__name__)
+
+import subprocess
+sound_process = None
 
 @app.route("/")
 def init():
@@ -9,7 +12,7 @@ def init():
 
 @app.route("/get/frame/")
 def get_frame():
-    return "FRAME as ASCII"
+    return subprocess.check_output(['python','get_frame.py']) 
 
 @app.route("/get/user/")
 def get_user():
@@ -19,9 +22,15 @@ def get_user():
     except Error:
         return "Private Name"
 
-@app.route("/post/sound/", methods=['GET', 'POST'])
-def post_sound(sound_data):
-    app.logger.info('Info')
+@app.route("/get/sound/")
+def start_sound():
+    global sound_process
+    sound_process = subprocess.Popen(['python','audio_client.py', request.remote_addr])
+
+@app.route("/get/mute/")
+def stop_sound():
+    global sound_process
+    sound_process.terminate()
 
 if __name__ == "__main__":
     app.run('0.0.0.0', 8008)
