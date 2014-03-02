@@ -2,8 +2,8 @@ import numpy as np
 import cv2
 
 class ImgGetter():
-    TRUECHAR="+"
-    FALSECHAR="+"
+    TRUECHAR="1"#"\033[34m+"
+    FALSECHAR="0"#"\033[32m+"
     def __init__(self, nCharX, nCharY):
         self.cam = cv2.VideoCapture(-1)
         self.nCharX=nCharX
@@ -11,6 +11,7 @@ class ImgGetter():
 
     def getImg(self):
         success, raw_data = self.cam.read()
+
         if not success:
             raise Exception("Failed to acquire webcam image.")
 
@@ -25,17 +26,19 @@ class ImgGetter():
 
         out = ""
 
-        blockIncX = int(width/self.nCharX)
-        blockIncY = int(height/self.nCharY)
+        blockIncX = float(width)/self.nCharX
+        blockIncY = float(height)/self.nCharY
 
-        for y in range(0,height,blockIncY):
-            for x in range(0,width,blockIncX):
+        for y in np.arange(0,height,blockIncY):
+            for x in np.arange(0,width,blockIncX):
+                x=int(x)
+                y=int(y)
                 block_c = np.ndarray.flatten(canny[y:y+blockIncY,x:x+blockIncX])
 
                 if sum(block_c)==0:
-                    out+=str(0)
+                    out+=self.FALSECHAR
                 else:
-                    out+=str(1)
+                    out+=self.TRUECHAR
             out+="\n"
         return out
 
@@ -43,8 +46,9 @@ class ImgGetter():
         self.cam.release()
 
 #imGet = ImgGetter(13*5,8*5)
+imGet = ImgGetter(120,40)
 
-#while True:
-#    print imGet.getImg()
+while True:
+    print imGet.getImg()
 
-#del imGet
+del imGet
