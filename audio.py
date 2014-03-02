@@ -32,7 +32,7 @@ stream.stop_stream()
 stream.close()
 p.terminate()
 
-url = '127.0.0.1'
+url = 'http://127.0.0.1:8008/post/sound/'
 data = urllib.urlencode({'FORMAT' : format,
                          'CHANNELS'  : CHANNELS,
                          'RATE' : RATE})

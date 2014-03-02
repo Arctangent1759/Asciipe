@@ -3,15 +3,13 @@
 from flask import Flask
 app = Flask(__name__)
 
-import subprocess
-
 @app.route("/")
 def init():
     return "asciipe"
 
 @app.route("/get/frame/")
 def get_frame():
-    return subprocess.check_output(["python","get_frame.py"])
+    return "FRAME as ASCII"
 
 @app.route("/get/user/")
 def get_user():
@@ -20,6 +18,10 @@ def get_user():
             return user_data.read()
     except Error:
         return "Private Name"
+
+@app.route("/post/sound/", methods=['GET', 'POST'])
+def post_sound(sound_data):
+    app.logger.info('Info')
 
 if __name__ == "__main__":
     app.run('0.0.0.0', 8008)
