@@ -3,6 +3,7 @@
 # this is the api for the client, use it to request stuff from the remote
 from argparse import ArgumentParser
 import urllib2
+import subprocess
 
 def parse_arguments():
     parser = ArgumentParser()
@@ -15,6 +16,8 @@ def main():
     api_request = "/get/"+get.request+"/"
     if (get.request == "init"):
         api_request = "/"
+    if (get.request == "sound"):
+        subprocess.Popen(['python','audio_receiver.py'])
     try:
         response = urllib2.urlopen("http://"+get.ip + api_request)
     except Exception as e:
