@@ -81,12 +81,10 @@ def main(w):
     handle()
 
     # initialize sound
-    """
     try:
         subprocess.check_output(['python','get.py','-ip',ip,'sound'])
     except Exception as e:
         error_msg = str(e)
-    """
     try:
         while True:
             w.erase()
@@ -94,7 +92,19 @@ def main(w):
                     ['python','get.py','-ip', ip, 'frame'])
             HEIGHT, WIDTH = w.getmaxyx()
             response = parse_color(response)
-            w.addstr(0,0,trim(response, WIDTH, HEIGHT))
+            responses = response.split('\n')
+            #w.addstr(0,0,trim(response, WIDTH, HEIGHT))
+            height, width = len(response), len(response[0])
+            for r in responses:
+                w.addstr(0, 0, r)
+            """
+            for y in xrange(height):
+                for x in xrange(width):
+                    if responses[y][x] == '0':
+                        w.addch(y,x,'-')
+                    else:
+                        w.addch(y,x,'+')
+            """
             w.refresh()
     except KeyboardInterrupt as e:
         error_msg = str(e)
