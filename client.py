@@ -17,7 +17,7 @@ def init():
 def get_frame():
     global img_obj
     if img_obj == None:
-        img_obj = ImgGet.ImgGetter(13*5,8*5)
+        img_obj = ImgGet.ImgGetter(120,40)
     return img_obj.getImg()
 
 @app.route("/get/user/")
