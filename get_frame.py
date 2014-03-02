@@ -1,4 +1,3 @@
-import subprocess
+import ImgGet
 
-with open("ascii.md") as f:
-    print f.read()
+print ImgGet.ImgGetter(13*5,8*5).getImg()

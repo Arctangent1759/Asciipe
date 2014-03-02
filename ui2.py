@@ -1,8 +1,10 @@
 import curses
 import signal
 import subprocess
+import console
 from time import sleep
 from threading import Thread
+import sys
 
 cat = """
    ____
@@ -24,29 +26,15 @@ ip = addr + ":" + port
 
 ip = "10.142.39.57:8008"
 ip = "0.0.0.0:8008"
+if len(sys.argv)>1:
+    ip = sys.argv[1]
 
 HEIGHT, WIDTH = 0, 0
 
+class Window:
+    def __init__(self, stdscr):
+        self.scr = stdscr
 
-class UI(Thread):
-    DELAY = .1 #Refresh delay
-    def __init__(self,stdscr):
-        Thread.__init__(self)
-        self.isRunning = False
-        self.stdscr = stdscr
-
-    def run(self):
-        #Main loop
-        self.isRunning = True
-        while self.isRunning:
-            self.height, self.width = self.stdscr.getmaxyx()
-            self.stdscr.addstr(5,5,str((self.width, self.height)))
-            self.stdscr.refresh()
-            sleep(UI.DELAY)
-
-
-    def stop(self):
-        self.isRunning = False
 
 def trim_nowrap(s, w, h):
     lines = s.split('\n')
@@ -68,6 +56,10 @@ def trim(s, w, h):
        result.append(line)
     return '\n'.join(result)
 
+def parse_color(r):
+    return r
+
+
 def main(w):
 
     curses.noecho()
@@ -82,19 +74,27 @@ def main(w):
     def handle(*args):
         w.erase()
         w.refresh()
-        HEIGHT, WIDTH = w.getmaxyx()
+        WIDTH, HEIGHT = console.getTerminalSize()
 
     signal.signal(signal.SIGWINCH, handle)
 
     handle()
 
+    # initialize sound
+    """
+    try:
+        subprocess.check_output(['python','get.py','-ip',ip,'sound'])
+    except Exception as e:
+        error_msg = str(e)
+    """
     try:
         while True:
             w.erase()
             response = subprocess.check_output(
                     ['python','get.py','-ip', ip, 'frame'])
             HEIGHT, WIDTH = w.getmaxyx()
-            w.addstr(0,0,trim_nowrap(response, WIDTH, HEIGHT))
+            response = parse_color(response)
+            w.addstr(0,0,trim(response, WIDTH, HEIGHT))
             w.refresh()
     except KeyboardInterrupt as e:
         error_msg = str(e)
