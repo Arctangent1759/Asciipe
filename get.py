@@ -17,7 +17,7 @@ def main():
     if (get.request == "init"):
         api_request = "/"
     if (get.request == "sound"):
-        subprocess.call(['python','audio_receiver.py'])
+        subprocess.Popen(['python','audio_receiver.py'])
     try:
         response = urllib2.urlopen("http://"+get.ip + api_request)
     except Exception as e:
