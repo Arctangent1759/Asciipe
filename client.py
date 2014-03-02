@@ -6,13 +6,19 @@ app = Flask(__name__)
 import subprocess
 sound_process = None
 
+import ImgGet
+img_obj = None
+
 @app.route("/")
 def init():
     return "asciipe"
 
 @app.route("/get/frame/")
 def get_frame():
-    return subprocess.check_output(['python','get_frame.py']) 
+    global img_obj
+    if img_obj == None:
+        img_obj = ImgGet.ImgGetter(13*5,8*5)
+    return img_obj.getImg()
 
 @app.route("/get/user/")
 def get_user():
