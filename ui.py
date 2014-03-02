@@ -14,7 +14,6 @@ class UI(Thread):
         self.isRunning = True
         while self.isRunning:
             self.height, self.width = self.stdscr.getmaxyx()
-
             self.stdscr.addstr(5,5,str((self.width, self.height)))
             self.stdscr.refresh()
             sleep(UI.DELAY)
@@ -41,7 +40,7 @@ except KeyboardInterrupt as e:
     print "Bye!"
 finally:
     ui.stop()
-    
+
     s.keypad(0)
     curses.nocbreak();
     curses.echo()
