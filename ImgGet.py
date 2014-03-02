@@ -46,9 +46,9 @@ class ImgGetter():
         self.cam.release()
 
 #imGet = ImgGetter(13*5,8*5)
-imGet = ImgGetter(120,40)
+#imGet = ImgGetter(120,40)
 
-while True:
-    print imGet.getImg()
+#while True:
+#    print imGet.getImg()
 
-del imGet
+#del imGet
