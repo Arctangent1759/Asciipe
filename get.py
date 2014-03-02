@@ -18,7 +18,7 @@ def main():
     try:
         response = urllib2.urlopen("http://"+get.ip + api_request)
     except Exception as e:
-        exit(4) #Exit 4 is short for 404
+        exit(404) #Exit 4 is short for 404
     print response.read()
 
 if __name__ == "__main__":
