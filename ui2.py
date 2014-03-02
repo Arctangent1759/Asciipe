@@ -30,6 +30,8 @@ if len(sys.argv)>1:
     ip = sys.argv[1]
 
 HEIGHT, WIDTH = 0, 0
+NEG_CHAR = '-'
+POS_CHAR = '+'
 
 class Window:
     def __init__(self, stdscr):
@@ -95,7 +97,7 @@ def main(w):
             HEIGHT, WIDTH = w.getmaxyx()
             response = parse_color(response)
             responses = response.split('\n')
-            w.addstr(0,0,trim(response, WIDTH, HEIGHT))
+            #w.addstr(0,0,trim(response, WIDTH, HEIGHT))
             height, width = len(responses), len(responses[0])
             """
             for r in responses:
@@ -109,6 +111,14 @@ def main(w):
                     else:
                         w.addch(y,x,'+')
             """
+            #w.addch(1,1,'r')
+            for y in xrange(len(responses)):
+                for x in xrange(len(responses[y])):
+                    if responses[y][x] == '1':
+                        w.addch(y,x,POS_CHAR)
+                    else:
+                        w.addch(y,x,NEG_CHAR)
+            # end of paint
             w.refresh()
     except KeyboardInterrupt as e:
         error_msg = str(e)
