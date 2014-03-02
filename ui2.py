@@ -1,6 +1,7 @@
 import curses
 import signal
 import subprocess
+import console
 from time import sleep
 from threading import Thread
 
@@ -27,26 +28,10 @@ ip = "0.0.0.0:8008"
 
 HEIGHT, WIDTH = 0, 0
 
+class Window:
+    def __init__(self, stdscr):
+        self.scr = stdscr
 
-class UI(Thread):
-    DELAY = .1 #Refresh delay
-    def __init__(self,stdscr):
-        Thread.__init__(self)
-        self.isRunning = False
-        self.stdscr = stdscr
-
-    def run(self):
-        #Main loop
-        self.isRunning = True
-        while self.isRunning:
-            self.height, self.width = self.stdscr.getmaxyx()
-            self.stdscr.addstr(5,5,str((self.width, self.height)))
-            self.stdscr.refresh()
-            sleep(UI.DELAY)
-
-
-    def stop(self):
-        self.isRunning = False
 
 def trim_nowrap(s, w, h):
     lines = s.split('\n')
@@ -82,7 +67,7 @@ def main(w):
     def handle(*args):
         w.erase()
         w.refresh()
-        HEIGHT, WIDTH = w.getmaxyx()
+        WIDTH, HEIGHT = console.getTerminalSize()
 
     signal.signal(signal.SIGWINCH, handle)
 
