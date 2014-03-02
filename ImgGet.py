@@ -30,7 +30,7 @@ class ImgGetter():
         blockIncY = float(height)/self.nCharY
 
         for y in np.arange(0,height,blockIncY):
-            for x in np.arange(0,width,blockIncX):
+            for x in reversed(np.arange(0,width,blockIncX)):
                 x=int(x)
                 y=int(y)
                 block_c = np.ndarray.flatten(canny[y:y+blockIncY,x:x+blockIncX])
